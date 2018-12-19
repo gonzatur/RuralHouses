@@ -1,0 +1,244 @@
+/*CABECERA Y VENTANA MODAL */
+
+body{
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+#tabs{
+    margin:auto;
+    width:40%;
+    padding: 10px;
+}
+
+#remember{
+    display:none;
+}   
+
+/* HEADER */
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+header {
+    display: block;
+    background: #6B74CB;
+    background-image: linear-gradient( rgb(46, 75, 115) 0% ,#f4f4f4 98%);
+    color: white;
+    height: 110px;
+}
+
+header input{
+    width: 230px;
+}
+
+header ul {
+    display: inline-block;
+    width:96%;
+}
+
+header > ul > li {
+    display: inline-block;
+    position:relative;
+    vertical-align: middle;
+    width:32%;
+}
+
+#lodestone {
+    margin-top: -10px;
+    text-align: left;
+    margin-left: -40px;
+    width: 20%;
+}
+
+#user {
+    text-align: right;
+    width: 25%;
+}
+
+#mogstation {
+    text-align: right;
+    width: 55%;
+}
+
+#idiomas input{
+    width: 40px;
+    margin-left: 10px;
+}
+
+#user input{
+    float: right;
+    width: 50px;
+    height: 46px;
+    border: 1px solid #c6c6c6;
+    border-radius: 50%;
+}
+
+#cabecera{
+    color:white;
+}
+
+/* Posicionamiento de los elementos de la ventana modal*/
+#tabs-1 form, #tabs-2 form{
+    max-width: 500px;
+    padding: 20px 12px 10px 20px;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+#tabs-1 form label, #tabs-2 form label{
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+#tabs-1 form label > span, #tabs-2 form label > span{
+    width: 35%;
+    font-weight: bold;
+    float: left;
+    padding-top: 13px;
+}
+#tabs-1 form input.input-field, #tabs-2 form input.input-field{
+    width: 48%;	
+}
+#tabs-1 form input.input-field, #tabs-2 form input.input-field{
+    box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    padding: 7px;
+    margin-top: 3.5px;
+}
+#tabs-1 form .input-field:focus, #tabs-2 form .input-field:focus{
+    border: 1px solid #315d87;
+}
+
+#rememberPass{
+    text-decoration: underline;
+}
+
+#rememberPass:hover{
+    cursor: pointer;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+    background: #315d87;
+}
+
+.ui-tabs .ui-tabs-nav {
+    margin: 0;
+    padding:0;
+}
+
+/* The Close Button */
+.close {                    
+    color: #315d87;
+    float: right;
+    font-size: 33px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#perfilUsuario{
+    position: absolute;
+    right: 30px;
+    width: 180px;
+    border: 1px solid #bcbcbc;
+    background: #ffffff;
+    top: 80px;
+    border-radius: 10px;
+    display: none;
+    z-index: 9999;
+}
+
+#perfilUsuario ul li:first-child:before{
+    content: "";
+    position: absolute;
+    width: 17px;
+    height: 8px;
+    background: #fff;
+    transform: rotate(-45deg);
+    right: 32px;
+    top: -1px;
+    z-index: 9999;
+}
+
+#perfilUsuario ul{
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#perfilUsuario ul li{
+    float: left;
+    width: 100%;
+}
+
+#perfilUsuario ul li:first-child{
+    float: left;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+#perfilUsuario ul li:last-child{
+    border-radius: 0 0 10px 10px;
+}
+
+#perfilUsuario ul li a{
+    text-decoration: none;
+    width: 88%;
+    float: left;  
+    padding: 10px;
+    color: #454545;
+}
+#perfilUsuario ul li a i{
+    color:red;
+}
+
+#perfilUsuario ul li:first-child a{
+    border-bottom: 1px solid #bcbcbc;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+}
+
+#perfilUsuario ul li:last-child a{
+    border-radius: 0 0 10px 10px;
+}
+
+#perfilUsuario ul li:last-child:hover{
+    background: #bcbcbc;
+}
+
+#noIniciado button{
+    padding: 5px;
+    background: #fff3;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+#noIniciado button:hover{
+    cursor: pointer;
+    padding: 5px;
+    background: #fff9;
+    border-radius: 5px;
+}
+
+#perfilUsuario ul li:not(:first-child):hover{
+    background: #bcbcbc;
+}

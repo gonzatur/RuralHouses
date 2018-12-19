@@ -1,0 +1,461 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Mis reservas</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+
+        <script src="js/cabecera.js"></script>
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link> 
+        <link rel="stylesheet" href="css/rh/footer.css"></link>
+        <link rel="stylesheet" href="css/rh/nav.css"></link>
+        <link rel="stylesheet" href="css/rh/viajeroReserva.css"></link>
+
+        <style>
+            .botonPdf{
+                background: url('images/Other/pdf.png') no-repeat left;
+                height: 26px;
+                background-size: contain;
+                padding-left: 30px;
+                border: none;
+            }
+
+            .close {                    
+                color: #315d87;
+                float: right;
+                font-size: 40px;
+                font-weight: bold;
+                margin-top: -40px;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 30px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            #tabs{
+                margin:auto;
+                width:40%;
+                padding: 0;
+                padding: 50px;
+                background: white;
+            }
+
+            #tabs div{
+                margin: 20px 5px;
+            }
+
+            #tabs div label{
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            #tabs div input{
+                float: right;
+                font-size: 20px;
+                border: none;
+                text-align: right;
+                margin-right: 10px;
+            }
+
+            #tabs input{
+                text-align: center;
+            }
+
+            #tabs .ui-state-default{
+                background: #fff;
+            }
+
+            #tabs .ui-state-hover{
+                background: none;
+                border: none;
+                box-shadow: none;
+            }
+
+            .ui-slider .ui-state-hover{
+                background: red;
+            }
+
+            #tabs .ui-widget.ui-widget-content {
+                border: 2px solid #cfd2f1;
+            }
+
+            .ui-slider {
+                border-radius: 10px;
+                background: white;
+                box-shadow: none;
+            }
+
+            #tabs div span:hover{
+                background: blue;
+                box-shadow: none;
+                text-shadow:none;
+            }
+
+            .ui-inputtextarea:hover{
+                border: 1px solid #cfd2f1 !important;
+            }
+
+            #comentando label:last-child {
+                font-size: 13px !important;
+                font-weight: normal !important;
+            }
+
+
+            #tabs .ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+                background: #fff;
+                box-shadow: none;
+                color: #313131;
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+        <h:inputHidden value="#{bkOpinion.viajero.nif}"/>
+        <h:inputHidden value="#{bkReserva.viajero.nif}"/>
+
+        <div id="myModal" class="modal">
+            <div id="tabs">
+                <span class="close">&times;</span>
+                <h:form>
+                    <div id="limpieza">
+                        <h:outputLabel value="Limpieza"/>
+                        <h:inputText id="limpieza" value="#{bkReserva.limpieza}" />
+                        <p:slider for="limpieza" minValue="0" maxValue="10" step="1" />
+                    </div>
+                    <div id="confort">
+                        <h:outputLabel value="Confort y comodidad"/>
+                        <h:inputText id="confort" value="#{bkReserva.confort}" />
+                        <p:slider for="confort" minValue="0" maxValue="10" step="1" />
+                    </div>
+                    <div id="ubicacion">
+                        <h:outputLabel value="Ubicación"/>
+                        <h:inputText id="ubicacion" value="#{bkReserva.ubicacion}" />
+                        <p:slider for="ubicacion" minValue="0" maxValue="10" step="1" />
+                    </div>
+                    <div id="calidadPrecio">
+                        <h:outputLabel value="Relación calidad-precio"/>
+                        <h:inputText id="calidadPrecio" value="#{bkReserva.calidadPrecio}" />
+                        <p:slider for="calidadPrecio" minValue="0" maxValue="10" step="1" />
+                    </div>
+                    <div id="trato">
+                        <h:outputLabel value="Trato recibido"/>
+                        <h:inputText id="trato" value="#{bkReserva.tratoRecibido}" />
+                        <p:slider for="trato" minValue="0" maxValue="10" step="1" />
+                    </div>
+                    <div id="comentando">
+                        <h:outputLabel value="Comentario"/><br></br>
+                        <p:inputTextarea rows="5" cols="70" counter="display" maxlength="500" counterTemplate="Quedan {0} caracteres." autoResize="false" value="#{bkReserva.comentarioOpinion}"/>
+                        <br />
+                        <h:outputLabel id="display" />
+                    </div>
+
+                    <h:commandButton value="Dar opinión" class="buscadorAtrasR"/>
+                </h:form>
+            </div>
+        </div>
+
+
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+
+
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                        </li>
+                        <li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink id="ajaxCerrarSesion2" update="cabecera perfilUsuarioGroup" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                <i class="fas fa-power-off"></i> Cerrar sesión
+                            </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <div id="nav">
+            <ul>
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                    <li class="titulo">
+                        <span>PROPIETARIO</span>
+                    </li>
+                    <li>
+                        <a href="ownerCalendar.xhtml" >
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Calendario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerHouses.xhtml" >
+                            <i class="fas fa-home"></i>
+                            <span>Alojamientos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerOpinion.xhtml">
+                            <i class="far fa-comment"></i>
+                            <span>Opiniones</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+                <!-- DIVISION DE MENU  PROPIETARIO Y VIAJERO-->
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario' or bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                    <li class="titulo">
+                        <span>VIAJERO</span>
+                    </li>
+                    <li>
+
+                        <a href="viajeroReserva.xhtml" class="active">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Mis reservas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroFav.xhtml">
+                            <i class="far fa-heart"></i>
+                            <span>Mis favoritos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroOpinion.xhtml">
+                            <i class="fas fa-star-half-alt"></i>
+
+                            <span>Mis opiniones</span>
+                        </a>
+                    </li>
+                    <li class="titulo">
+                        <span>PERFIL</span>
+                    </li>
+                    <li>
+                        <a href="userProfile.xhtml">
+                            <i class="far fa-user"></i>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+            </ul>
+        </div>
+        <!-- FIN CABECERA -->
+
+
+        <div id="CuadroReservas">
+            <h:form rendered="#{bkReserva.reserva!=null}">
+                <h:commandButton action="#{bkReserva.cargarseReserva()}" value="Volver a mis reservas" class="buscadorAtras" />
+            </h:form>
+            <h:outputLabel value="Mis reservas" style="font-size: 20px; font-weight: bold;"></h:outputLabel>
+            <ui:repeat var="reserva" value="#{bkReserva.listadoReservas}"> 
+                <h:form class="formReserva" rendered="#{bkReserva.reserva==null}">
+                    <h:inputHidden value="#{reserva.codigoReserva}" binding="#{bkReserva.reservaHidden}"></h:inputHidden>
+                    <p:graphicImage class="left" url="images/Alojamientos/#{reserva.registroTurismo.registroTurismo}/#{reserva.registroTurismo.imagenPrincipal}" width="115" height="90"
+                                    rendered="#{reserva.registroTurismo.imagenPrincipal != ''}"></p:graphicImage>
+                    <h:graphicImage url="images/Alojamientos/noAvailable.jpg" class="left" width="115" height="90" 
+                                    rendered="#{reserva.registroTurismo.imagenPrincipal == ''}"></h:graphicImage>
+
+                    <h:outputLabel value="#{reserva.registroTurismo.nombre}"></h:outputLabel><br></br>
+                    <p:rating value="#{bkReserva.puntuacionMediaAloj(reserva.registroTurismo.registroTurismo)}" stars="5" readonly="true"></p:rating>
+                    <div id="centro">
+                        <h:outputLabel value="Fecha de entrada: " >
+                            <h:outputLabel value="#{reserva.fechaEntrada}">
+                                <h:outputLabel value=" a partir de las #{reserva.registroTurismo.condicionesalojamientoList.get(0).g}"></h:outputLabel>
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
+                            </h:outputLabel> 
+                        </h:outputLabel><br></br>
+
+                        <h:outputLabel value="Fecha de salida: " >
+                            <h:outputLabel value="#{reserva.fechaSalida}">
+                                <h:outputLabel value=" a partir de las #{reserva.registroTurismo.condicionesalojamientoList.get(0).h}"></h:outputLabel>
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
+                            </h:outputLabel> 
+                        </h:outputLabel><br></br>
+
+                        <h:outputLabel value="Precio total: #{reserva.precioTotal} €" ></h:outputLabel>
+                    </div>
+                    <div id="derecha">
+                        <h:commandButton value="Ver reserva" actionListener="#{bkReserva.mostrarDatosReserva()}" class="buscadorAtrasR"/><button value="Opinar" type="reset" id="opinando" name="#{reserva.codigoReserva}" class="buscadorAtrasR">Opinar</button>
+                    </div>
+                </h:form> 
+
+            </ui:repeat>
+
+            <h:outputLabel value="Todavía no ha realizado ninguna reserva" rendered="#{bkReserva.listadoReservas.size()==0}" class="noReserva"/>
+
+            <h:form class="showReserva" rendered="#{bkReserva.reserva!=null}">
+
+                <div id="parteIzq">
+                    <h:outputLabel value="Número de reserva: #{bkReserva.reserva.codigoReserva}" class="negrita izq subrayado"/>
+
+                    <h:outputLabel value="Detalles de la reserva" class="negrita subrayado izq"/>
+
+                    <h:outputLabel value="#{bkReserva.strFechaReserva}" class="izq"/>
+
+                    <h:outputLabel value="#{bkReserva.reserva.numeroPersonas} personas" class="izq"/>
+
+                    <h:outputLabel value=" #{bkReserva.precioPersonas} €" class="izq cifra negrita"/>
+
+                    <h:outputLabel value="Precio final" class="negrita subrayado izq"/>
+
+                    <h:outputLabel value="#{bkReserva.precioTotalReserva} € pagado con tarjeta" class="verde izq negrita"/>
+
+                    <h:outputLabel value="Comisión 8% " class="izq"/>
+                    <h:outputLabel value="#{bkReserva.reserva.comisionPagada} €" class="cifra izq negrita"/>
+                    <br></br>
+
+                    <h:outputLabel value="Anticipo para el propietario #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).d}%"
+                                   class="izq"/>
+                    <h:outputLabel value="#{bkReserva.anticipoPagado} €" class="cifra izq negrita"/>
+                    <br></br>
+
+                    <h:outputLabel value="Pendiente de pagar a la llegada " class="izq"/>
+                    <h:outputLabel value="#{bkReserva.pendientePagar} €" class="cifra izq negrita"/>
+
+                    <br></br>
+
+                </div>
+
+                <div id="parteDer">
+                    <h:commandButton value="Documento de reserva" class="izq botonPdf" actionListener="#{bkReserva.generarPdf()}"></h:commandButton><br></br><br></br>
+
+                    <h:outputLabel value="Detalles del alojamiento" class="izq negrita subrayado"/>
+                    <p:graphicImage class="left margen" url="images/Alojamientos/#{reserva.registroTurismo.registroTurismo}/#{reserva.registroTurismo.imagenPrincipal}" width="115" height="90"
+                                    rendered="#{reserva.registroTurismo.imagenPrincipal != ''}"></p:graphicImage>
+                    <h:graphicImage url="images/Alojamientos/noAvailable.jpg" class="left margen" width="115" height="90" 
+                                    rendered="#{reserva.registroTurismo.imagenPrincipal == ''}"></h:graphicImage>
+                    <h:outputLabel value="#{reserva.registroTurismo.nombre}" class="negrita" style="margin-left: 10px;"></h:outputLabel><br></br>
+                    <p:rating value="#{bkReserva.puntuacionMediaAloj(reserva.registroTurismo.registroTurismo)}" stars="5" readonly="true"></p:rating>
+                    <h:outputLabel value="Condiciones del alojamiento" class="izq negrita subrayado"/>
+                    <h:outputLabel value="Check-in: #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).g}" class="izq">
+                        <h:outputLabel value="Check-out: #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).h}" style="float: right; width: 50%;" />
+                    </h:outputLabel>
+                    <h:outputLabel value="Cancelaciones" class="izq negrita" style="font-size: 19px;"/>
+                    <h:outputLabel value="No se devolverá si se cancela en un plazo posterior a #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).e} días. Si cancela antes de #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).e} días se devuelve el #{bkReserva.reserva.registroTurismo.condicionesalojamientoList.get(0).f}% " class="izq "/>
+                    <p:commandButton value="Cancelar reserva" icon="fa fa-fw fa-trash-o" class="margen"></p:commandButton>
+                </div>
+
+            </h:form>
+        </div>
+
+        <footer class="flex">
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Nosotros</h3></li>
+                <li><a href="#">CONDICIONES DE USO</a></li>
+                <li><a href="#">POLITICA DE PRIVACIDAD</a></li>
+                <li><a href="#">COOKIES</a></li>
+                <li><a href="#">CONTACTAR</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Propietarios</h3></li>
+                <li><a href="#">DESTACA TU ALOJAMIENTO</a></li>
+                <li><a href="#">CONSEJOS</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Viajeros</h3></li>
+                <li><a href="#">CASAS RURALES</a></li>
+                <li><a href="#">PUEBLOS</a></li>
+            </ul>
+
+            <section class="footer-social-section flex">
+                <span class="footer-social-overlap footer-social-connect">
+                    CONECTA <span class="footer-social-small">CON</span> NOSOTROS
+                </span>
+                <span class="footer-social-overlap footer-social-icons-wrapper">
+                    <a href="https://www.facebook.com/paviliongift" class="generic-anchor" target="_blank" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/PavilionGiftCo" class="generic-anchor" target="_blank" title="Twitter" ><i class="fab fa-twitter"></i></a>
+                    <a href="http://instagram.com/paviliongiftcompany" class="generic-anchor" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </span>
+            </section>
+        </footer>
+
+
+        <script>
+            var modal = document.getElementById('myModal');
+            var ventanaLogin = document.getElementById('perfilUsuario');
+            var span = document.getElementsByClassName("close")[0];
+
+
+            $(document).on("click", "#opinando", function () {
+                $("#myModal").css("display", "block");
+                var name = $(this).attr("name");
+                //alert(name)
+            });
+
+            span.onclick = function () {
+                $("#myModal").css("display", "none");
+                $("#remember").css("display", "none");
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    $("#myModal").css("display", "none");
+                    $("#remember").css("display", "none");
+                }
+            }
+
+
+        </script>
+    </h:body>
+</html>

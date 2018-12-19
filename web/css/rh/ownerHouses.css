@@ -1,0 +1,178 @@
+#formHidden{
+    display:none;
+}
+
+#tabs{
+    float: right;
+    width: 85%;
+    margin-bottom: 35px;
+    margin-top: 10px;
+}
+
+#ultimo{
+    float: right;
+}
+
+#prueba > span form{
+    width: 98.45%;
+    padding:10px;
+    border: 2px solid #3d587d;
+    margin-top: 10px;
+}
+
+#prueba > span form{
+    max-width: 100% !important;
+}
+
+
+#prueba span input{
+    margin:5px;
+}
+
+.boton{
+    padding: 0.6em;
+    background: #e0e0e0;
+    font-size: 12px;
+    border-bottom: 2px solid #cecece;
+    color: #777;
+}
+
+.boton i{
+    margin-right: 4px;
+}
+
+.left{
+    float:left;
+    list-style: none;
+}
+
+.left li{
+    margin:-4px 25px 7px -15px;
+}
+
+.left li .ui-button{
+    padding: 0;
+    margin: 20px 0 0 -20px;
+    font-size: 10px;
+}
+
+.left li .ui-button span:first-child{
+    color: #da5c5c;
+}
+
+#borrarAloj{
+    margin:20px;
+}
+
+#borrarAloj :first-child {
+    font-weight: bold;
+    font-size: 20px;
+
+}
+
+#borrarAloj .ui-rating{
+    width: 100px;
+    clear: both;
+    margin: 3px 0 1px 0;
+}
+
+#borrarAloj .numOp{
+    float:left;
+
+}
+
+#borrarAloj .despedir{
+    margin:20px;
+    float:left;
+}
+
+#borrarAloj .imagenDel{
+    width: 40%;
+    float: left;
+    clear: both;
+}
+
+#borrarAloj .borrarCasa{
+    float:left;
+    clear:both;
+}
+
+/*-----------------------------------------------*/
+/*CLASES PRIMEFACES*/
+.ui-widget.ui-widget-content{
+    border:0;
+}
+.ui-tabs .ui-tabs-nav {
+    margin: 0;
+    padding: 0;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0;
+}
+
+.ui-state-default a, .ui-state-default a:link, .ui-widget-header{
+    text-shadow:none;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    text-shadow:none;
+}
+
+#tabs .ui-state-hover:not(textarea){
+    background: #979DCA;
+}
+
+#menuAloj .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+    background: #424eb8;
+}
+
+#tabs-2 form label{
+    display: inline;
+}
+
+/* MENUS */
+
+.form-style-2{
+    max-width: 500px;
+    padding: 20px 12px 10px 20px;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+.form-style-2 label{
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+.form-style-2 label > span{
+    width: 35%;
+    font-weight: bold;
+    float: left;
+    padding-top: 13px;
+}
+.form-style-2 input.input-field, .form-style-2 .select-field{
+    width: 48%;	
+}
+.form-style-2 input.input-field{
+    box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    padding: 7px;
+    outline: none;
+}
+.form-style-2 .input-field:focus{
+    border: 1px solid #424EB8;
+}
+
+#tabs-3 textarea{
+    width: 70%;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.cadaFoto{
+    border: 1px solid #3d587d;
+    float: left;
+    margin: 5px 20px;
+    padding: 10px 0 5px 10px;
+    background: #cbd1e91a;
+}

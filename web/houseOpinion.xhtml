@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link>
+        <script src="js/jquery-ui.min.js"></script>
+
+        <style>
+
+            #parteIzquierda{
+                width: 20%;
+                float: left;
+                margin: 10px 0 0 25px;
+            }
+
+            #cuadroOpinion{
+                float: left;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                border:2px solid #a8b3c3;
+            }
+
+            #cuadroOpinion label{
+                display: block;
+            }
+
+            #cuadroOpinion input{
+                text-align: center;
+                width: 60px;
+                height: 50px;
+                font-size: 30px;
+                border:3px solid #a8b3c3;
+            }
+
+            #cuadroOpinionCentro{
+                width: 100%;
+            }
+
+            #cuadroOpinionCentro *{
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .inputCentrar{
+                margin: 0 auto;
+            }
+
+            #cuadroOpinion .ui-progressbar{
+                height: 10px;
+                margin: 10px 0 13px 0;
+                width: 100%;
+            }
+
+            .cifra{
+                float: right;
+            }
+
+            #parteDerecha{
+                float: right;
+                width: 70%;
+                margin-top: 7%;
+                margin: 10px 0 0 25px;
+            }
+            #parteDerecha h2{
+                text-align: right;
+                margin-right: 25px;
+            }
+
+            #opinionesAlojamientoDer{
+                position: absolute;
+                height: 500px;
+                overflow: auto;
+                padding: 10px 0 0 10px;
+                border: 2px solid #a8b3c3;
+                margin-right: 25px;
+            }
+
+            #opinionesAlojamientoDer label{
+                display: block;
+            }
+
+            #opinionUsuario{
+                float: left;
+                width: 90%;
+                padding: 20px;
+                border-bottom: 2px solid #3d587d;
+            }
+
+            #opinionUsuario img{
+                margin-left: 20px;
+                text-align: center;
+            }
+
+            #opinionComentario{
+                float: right;
+                width: 80%;
+            }
+
+
+
+        </style>
+    </h:head>
+    <h:body>
+        <!-- CABECERA -->
+        <div id="myModal" class="modal">
+            <div id="tabs">
+                <span class="close">&times;</span>
+                <ul>
+                    <li><a href="#tabs-1">Inicia sesión</a></li>
+                    <li><a href="#tabs-2">Hazte una cuenta</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <h:form id="login" prependId="false">
+                        <label><span>E-mail:</span><h:inputText class="input-field" value="#{bkLogin.email}"/></label>
+                        <label><span>Contraseña:</span><h:inputText class="input-field" value="#{bkLogin.password}"/></label>
+                        <p:commandButton value="Entrar" action="#{bkLogin.compruebaLogin()}" update="login cabecera perfilUsuarioGroup"/>
+                        <label><span style="color:red; width: 100%;">#{bkLogin.mens}</span></label><br></br><br></br>
+                        <h:outputLabel onclick="formRemember()" ><span id="rememberPass" style="width: 100% !important;">No recuerdo mi contraseña</span></h:outputLabel>
+                    </h:form>
+
+                    <h:form id="remember">
+                        <label><span>Introduzca su email:</span><h:inputText class="input-field" value="#{bkLogin.destinatario}"/></label>
+                        <p:commandButton value="Solicitar contraseña" action="#{bkLogin.rememberPassword()}" update="mensaje"/>
+                        <h:panelGroup id="mensaje">
+                            <h:outputLabel rendered="#{bkLogin.mensPass=='Introduzca un e-mail válido'}"><span style="width: 100%; color:red;">#{bkLogin.mensPass}</span></h:outputLabel>
+                            <h:outputLabel rendered="#{bkLogin.mensPass!='Introduzca un e-mail válido'}"><span style="width: 100%; color:green;">#{bkLogin.mensPass}</span></h:outputLabel>
+                            <br></br>
+                        </h:panelGroup>
+
+                    </h:form>
+
+                </div>
+                <div id="tabs-2">
+                    <h:form prependId="false">
+                        <p:selectBooleanCheckbox id="propietario" value="#{bkRegister.propietario}" itemLabel="Soy propietario">
+                            <f:ajax render="viajero" listener="#{bkRegister.onActiveStatusChange}" />
+                        </p:selectBooleanCheckbox>
+                        <p:selectBooleanCheckbox id="viajero" value="#{bkRegister.viajero}" itemLabel="Soy viajero">
+                            <f:ajax render="propietario" listener="#{bkRegister.onInactiveStatusChange}" />
+                        </p:selectBooleanCheckbox><br></br><br></br>
+                        <label><span>E-mail:</span><h:inputText class="input-field" value="#{bkRegister.email}"/></label>
+                        <label><span>Contraseña:</span><h:inputText class="input-field" value="#{bkRegister.password}"/></label>
+                        <label><span>Repita contraseña:</span><h:inputSecret class="input-field" value="#{bkRegister.passwordCertified}"/></label>
+
+                        <p:commandButton value="Comenzar el registro" action="#{bkRegister.compruebaRegistro()}" update="mensajillo"/>
+                        <h:outputLabel id="mensajillo"><span style="width: 100%; color: red;">#{bkRegister.mens}</span></h:outputLabel>
+                    </h:form>  
+                </div>
+            </div>
+        </div>
+
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+
+
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <li>
+                                <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                            </li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink id="ajaxCerrarSesion2" update="login cabecera perfilUsuarioGroup" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                    <i class="fas fa-power-off"></i> Cerrar sesión
+                                </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <!-- FIN CABECERA -->
+
+        <div id="parteIzquierda">
+            <h2>Opiniones de #{bkSearchEngine.alojamiento.nombre}</h2>
+            <h4>#{bkSearchEngine.saberPueblo(bkSearchEngine.alojamiento.registroTurismo)} (#{bkSearchEngine.saberProvincia(bkSearchEngine.alojamiento.registroTurismo)})</h4>
+
+            <div id="cuadroOpinion">
+                <div id="cuadroOpinionCentro">
+                    <h2>Puntuación</h2>
+                    <p>Basado en #{bkSearchEngine.alojamiento.opinionList.size()} opiniones</p>
+                    <div class="inputCentrar">
+                        <h:inputText value="#{bkOpinion.puntuacionMediaAlojStr(bkSearchEngine.alojamiento.registroTurismo)}" readonly="true"/>
+                    </div>
+                </div>
+
+                <h:outputLabel value="Limpieza">
+                    <h:outputLabel value="#{bkOpinion.puntuacionLimpieza(bkSearchEngine.alojamiento.registroTurismo)/10}" class="cifra"/>
+                </h:outputLabel>
+                <p:progressBar value="#{bkOpinion.puntuacionLimpieza(bkSearchEngine.alojamiento.registroTurismo)}" displayOnly="true"/>
+
+                <h:outputLabel value="Confort">
+                    <h:outputLabel value="#{bkOpinion.puntuacionConfort(bkSearchEngine.alojamiento.registroTurismo)/10}" class="cifra"/>
+                </h:outputLabel>
+                <p:progressBar value="#{bkOpinion.puntuacionConfort(bkSearchEngine.alojamiento.registroTurismo)}" displayOnly="true"/>
+
+                <h:outputLabel value="Ubicación">
+                    <h:outputLabel value="#{bkOpinion.puntuacionUbicacion(bkSearchEngine.alojamiento.registroTurismo)/10}" class="cifra"/>
+                </h:outputLabel>
+                <p:progressBar value="#{bkOpinion.puntuacionUbicacion(bkSearchEngine.alojamiento.registroTurismo)}" displayOnly="true"/>
+
+                <h:outputLabel value="Relación C-P">
+                    <h:outputLabel value="#{bkOpinion.puntuacionCalPre(bkSearchEngine.alojamiento.registroTurismo)/10}" class="cifra"/>
+                </h:outputLabel>
+                <p:progressBar value="#{bkOpinion.puntuacionCalPre(bkSearchEngine.alojamiento.registroTurismo)}" displayOnly="true"/>
+
+                <h:outputLabel value="Trato recibido">
+                    <h:outputLabel value="#{bkOpinion.puntuacionTrato(bkSearchEngine.alojamiento.registroTurismo)/10}" class="cifra"/>
+                </h:outputLabel>
+                <p:progressBar value="#{bkOpinion.puntuacionTrato(bkSearchEngine.alojamiento.registroTurismo)}" displayOnly="true"/>
+
+            </div>
+        </div>
+
+        <div id="parteDerecha">
+            <h:form>
+                <h2> <h:commandLink value="Ir al alojamiento" action="house.xhtml"/></h2>
+            </h:form>
+            <br></br><br></br>
+            <div id="opinionesAlojamientoDer">
+                <ui:repeat var="opinion" value="#{bkSearchEngine.alojamiento.opinionList}">
+                    <div id="opinionUsuario">
+                        <div id="opinionComentario">
+                            <p:rating value="1" stars="5" readonly="true" rendered="#{opinion.puntuacionMedia eq 0 or opinion.puntuacionMedia eq 1 or opinion.puntuacionMedia eq 2}"/>
+                            <p:rating value="2" stars="5" readonly="true" rendered="#{opinion.puntuacionMedia eq 3 or opinion.puntuacionMedia eq 4}"/>
+                            <p:rating value="3" stars="5" readonly="true" rendered="#{opinion.puntuacionMedia eq 5 or opinion.puntuacionMedia eq 6}"/>
+                            <p:rating value="4" stars="5" readonly="true" rendered="#{opinion.puntuacionMedia eq 7 or opinion.puntuacionMedia eq 8}"/>
+                            <p:rating value="5" stars="5" readonly="true" rendered="#{opinion.puntuacionMedia eq 9 or opinion.puntuacionMedia eq 10}"/>
+                            <h:outputLabel class="fecha" value="#{opinion.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
+                            </h:outputLabel><br></br>
+                            <h:outputLabel value="#{opinion.comentario}" style="font-weight: bold;"/>
+                        </div>
+                        <h:panelGroup rendered="#{opinion.nif.fotoPerfil.length() == 0}">
+                            <img src="images/FotoPerfil/user.png" width="60" height="60" style="border-radius: 100px;"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{opinion.nif.fotoPerfil.length() > 0}">
+                            <img src="images/FotoPerfil/#{opinion.nif.fotoPerfil}" width="60" height="60" style="border-radius: 100px;"/>
+                        </h:panelGroup>
+                        <h:outputLabel value="#{opinion.nif.nombre} #{opinion.nif.apellido1}"/>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+
+
+    </h:body>
+
+    <script>
+        var modal = document.getElementById('myModal');
+        var span = document.getElementsByClassName("close")[0];
+        function iniciaSesion() {
+            $("#tabs").css("display", "block");
+            $("#myModal").css("display", "block");
+            $("#tabs").tabs({
+                active: 0
+            });
+        }
+
+        function formRemember() {
+            $("#remember").css("display", "block");
+        }
+
+        function registro() {
+            $("#tabs").css("display", "block");
+            $("#myModal").css("display", "block");
+            $("#tabs").tabs({
+                active: 1
+            });
+        }
+
+        function mostrarDatosUsuario(id) {
+            if (document.getElementById) { //se obtiene el id
+                var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+                el.style.display = (el.style.display == 'block') ? 'none' : 'block'; //damos un atributo display:none que oculta el div
+            }
+        }
+
+        span.onclick = function () {
+            $("#myModal").css("display", "none");
+            $("#remember").css("display", "none");
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                $("#myModal").css("display", "none");
+                $("#remember").css("display", "none");
+            }
+        }
+
+        PrimeFaces.locales['es'] = {
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            monthNames: ['Enero', 'febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            dayNamesMin: ['D', 'L', 'M', 'X', 'J ', 'V', 'S '],
+            firstDay: 1
+        };
+
+    </script>
+</html>
+

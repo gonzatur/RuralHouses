@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="search.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="ownerCalendar.jsp" x="650" y="150" zoom="true"/>
+        <Node id="houseOpinion.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="viajeroOpinion.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="index.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="ownerHouses.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="registro.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="ownerOpinion.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="viajeroReserva.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="administrador.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="viajeroFav.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="userProfile.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="house.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="ownerCalendar.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="reserva.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="newHouse.xhtml" x="150" y="600" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

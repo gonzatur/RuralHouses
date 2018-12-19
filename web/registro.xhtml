@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <h:outputText value="Nif"></h:outputText><br></br>
+            <p:inputText id="nif" value="#{bkRegister.nif}" required="true" maxlength="9">
+                <f:ajax event="keyup" listener="#{bkRegister.validarNif()}" render="nif"></f:ajax>
+            </p:inputText><br></br>
+            <h:outputText value="Nombre"></h:outputText><br></br>
+            <h:inputText value="#{bkRegister.nombre}" required="true"></h:inputText><br></br>
+            <h:outputText value="Apellidos"></h:outputText><br></br>
+            <h:inputText value="#{bkRegister.apellidos}" required="true"></h:inputText><br></br>
+            <h:outputText value="Poblacion"></h:outputText><br></br>
+            <p:selectOneMenu id="city" value="#{bkRegister.city}" editable="false"  filter="true" filterMatchMode="startsWith" caseSensitive="false" required="true">
+                <f:selectItems value="#{bkRegister.allCities}" />
+            </p:selectOneMenu><br></br>
+            <h:outputText value="Telefono"></h:outputText><br></br>
+            <h:inputText value="#{bkRegister.telefono}" required="true"></h:inputText><br></br>
+            <p:fileUpload value="#{bkRegister.file}" mode="simple" skinSimple="true"></p:fileUpload><br></br>
+
+            <h:commandButton value="Terminar registro" action="#{bkRegister.terminarRegistro()}"/>
+          
+        </h:form>
+    </h:body>
+</html>
+

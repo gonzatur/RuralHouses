@@ -1,0 +1,480 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="css/jquery.fancybox.min.css" />  
+        <script src="js/jquery.fancybox.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        
+
+        <script src="js/jquery.fancybox.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/ownerHouses.js"></script>
+        <script src="js/cabecera.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+
+
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link> 
+        <link rel="stylesheet" href="css/rh/footer.css"></link>
+        <link rel="stylesheet" href="css/rh/nav.css"></link>
+
+        <style type="text/css">
+            .comprobar{
+                height: auto !important;
+                width: 100% !important;
+                float: none !important;
+            }
+
+            .comprobar input, .comprobar span{
+                width: 35% !important;
+            }
+
+            .form-style-2{
+                padding: 20px 12px 10px 20px;
+                font: 13px Arial, Helvetica, sans-serif;
+                width: 85%;
+                float: right;
+                border: 2px solid #3d587d;
+                margin-top: 10px;
+                height: 570px;
+                background: white;
+            }
+            .form-style-2-heading{
+                font-weight: bold;
+                font-style: italic;
+                border-bottom: 2px solid #ddd;
+                margin-bottom: 20px;
+                font-size: 17px;
+                padding-bottom: 3px;
+            }
+            .form-style-2 label{
+                display: block;
+                margin: 0px 0px 15px 0px;
+            }
+            .form-style-2 label > span{
+                width: 15%;
+                text-align: left;
+                font-weight: bold;
+                float: left;
+                padding-top: 8px;
+                padding-right: 5px;
+            }
+            .form-style-2 input.input-field, .form-style-2 .select-field{
+                width: 25%;	
+            }
+            .form-style-2 input.input-field{
+                box-sizing: border-box;
+                border: 1px solid #C2C2C2;
+                box-shadow: 1px 1px 4px #EBEBEB;
+                border-radius: 3px;
+                padding: 7px;
+                outline: none;
+            }
+            .form-style-2 .input-field:focus, 
+            .form-style-2 .tel-number-field:focus, 
+            .form-style-2 .textarea-field:focus,  
+            .form-style-2 .select-field:focus{
+                border: 1px solid #3d587d;
+            }
+            .form-style-2 .textarea-field{
+                height:100px;
+                width: 55%;
+            }
+            .form-style-2 input[type=submit]{
+                border: none;
+                padding: 8px 15px 8px 15px;
+                background: #FF8500;
+                color: #fff;
+                box-shadow: 1px 1px 4px #DADADA;
+                border-radius: 3px;
+                width: 100%;
+            }
+            .form-style-2 input[type=submit]:hover,
+            .form-style-2 input[type=button]:hover{
+                background: #EA7B00;
+                color: #fff;
+            }
+
+            /* VENTANAS MODALES PARA CAMBIO DE DATOS */
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 40px;
+                font-weight: bold;
+                margin-right: -20px !important;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal form{
+                width: 35%;
+                margin: 0 auto;
+                background: white;
+            }
+
+        </style>
+
+        <script>
+            $(function () {
+                $(".file").on("change", function (e) {
+                    var fileName = '';
+                    fileName = e.target.value.split('\\').pop();
+                    $("#sp2").text(fileName);
+                });
+
+                $(".datos .input-field").on("dblclick", function (e) {
+                    var openModal = $(this).attr('class').split(' ')[1];
+                    $('.' + openModal).css("display", "block");
+                });
+
+
+                var modal = document.getElementById('myModal');
+                var modal2 = document.getElementById('myModalTwo');
+                var modal3 = document.getElementById('myModalThree');
+                window.onclick = function (event) {
+                    if (event.target === modal) {
+                        $(".modal").css("display", "none");
+                    } else if (event.target === modal2) {
+                        $(".modal").css("display", "none");
+                    } else if (event.target === modal3) {
+                        $(".modal").css("display", "none");
+                    }
+                }
+
+                $(".close").on("click", function () {
+                    $(".modal").css("display", "none");
+                });
+
+                //------------------------------
+
+                $.validator.addMethod('repiteTelefono', function () {
+                    var tlf = $('#formularioTelefono #newTelefono').val();
+                    var tlfR = $('#formularioTelefono #newTelefonoRepeat').val();
+                    if (tlf !== tlfR) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }, "repeat tlf");
+
+                $.validator.addMethod('repitePassword', function () {
+                    var password = $('#formularioContrasena #password').val();
+                    var passwordR = $('#formularioContrasena #passwordRepeat').val();
+                    if (password !== passwordR) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }, "repeat psswd");
+
+
+                $('#formularioContrasena').validate({
+                    rules: {
+                        'password': {required: true, minlength: 4},
+                        'passwordRepeat': {required: true, minlength: 4, repitePassword: true}
+                    },
+                    messages: {
+                        'password': {required: "Contraseña es un campo obligatoria", minlength: "Debe tener un mínimo de 5 caracteres."},
+                        'passwordRepeat': {required: "Repetir contraseña es un campo obligatorio", minlength: "Debe tener un mínimo de  caracteres.", repitePassword: "Las contraseñas deben coincidir."}
+                    }
+                });
+
+                $('#formularioTelefono').validate({
+                    rules: {
+                        'newTelefono': {required: true, maxlength: 9, minlength: 9, number: true},
+                        'newTelefonoRepeat': {required: true, maxlength: 9, minlength: 9, number: true, repiteTelefono: true}
+                    },
+                    messages: {
+                        'newTelefono': {required: "Teléfono es un campo obligatorio", minlength: "Debe tener 9 números", number: "Sólo se aceptan números", maxlength: "Debe tener 9 números"},
+                        'newTelefonoRepeat': {required: "Repetir teléfono es un campo obligatorio", minlength: "Debe tener 9 números", number: "Sólo se aceptan números", maxlength: "Debe tener 9 números", repiteTelefono: "Los teléfonos deben coincidir."}
+                    }
+                });
+
+                $.validator.addMethod('changeMail', function () {
+
+                    var datos = 'mail=' + $("#formularioMail #mail").val();
+                    var response;
+                    //Ponemos el nombre del servlet que nos dará la respuesta y los datos para poder encontrarlas
+
+                    $.ajax({
+                        url: "CompruebaDatos",
+                        dataType: 'json',
+                        async: false,
+                        data: datos,
+                        success: function (result) {
+                            response = result.respuesta;
+                        }
+                    });
+                    if (response) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }, "Ya existe ese email");
+
+                $('#formularioMail').validate({
+                    rules: {
+                        'mail': {required: true, email: true, changeMail: true}
+                    },
+
+                    messages: {
+                        'mail': {required: "E-mail es un campo obligatorio.", email: "Debe tener el formato xxx@xx.xx", changeMail: "Este e-mail ya se encuentra en nuestra base de datos."}
+                    }
+                });
+            });
+        </script>
+
+    </h:head>
+
+    <h:body>
+        <h:inputHidden value="#{bkOpinion.viajero.nif}"/>
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+
+
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                        </li>
+                        <li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink id="ajaxCerrarSesion2" update="cabecera perfilUsuarioGroup" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                <i class="fas fa-power-off"></i> Cerrar sesión
+                            </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <!-- FIN CABECERA -->
+
+        <div id="nav">
+            <ul>
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                    <li class="titulo">
+                        <span>PROPIETARIO</span>
+                    </li>
+                    <li>
+                        <a href="ownerCalendar.xhtml">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Calendario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerHouses.xhtml">
+                            <i class="fas fa-home"></i>
+                            <span>Alojamientos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerOpinion.xhtml">
+                            <i class="far fa-comment"></i>
+                            <span>Opiniones</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+                <!-- DIVISION DE MENU  PROPIETARIO Y VIAJERO-->
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario' or bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                    <li class="titulo">
+                        <span>VIAJERO</span>
+                    </li>
+                    <li>
+
+                        <a href="viajeroReserva.xhtml">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Mis reservas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroFav.xhtml">
+                            <i class="far fa-heart"></i>
+                            <span>Mis favoritos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroOpinion.xhtml">
+                            <i class="fas fa-star-half-alt"></i>
+
+                            <span>Mis opiniones</span>
+                        </a>
+                    </li>
+                    <li class="titulo">
+                        <span>PERFIL</span>
+                    </li>
+                    <li>
+                        <a href="userProfile.xhtml" class="active">
+                            <i class="far fa-user"></i>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+            </ul>
+        </div>
+
+
+        <div class="form-style-2">
+            <div class="form-style-2-heading">Para cambiar datos haz doble click en el campo que quieras modificar</div>
+            <h:panelGroup class="datos">
+
+                <label><span>E-mail</span><h:inputText class="input-field mail" value="#{bkReserva.viajero.email}" readonly="true"/></label>
+                <label><span>Número de teléfono</span><h:inputText class="input-field telefono" value="#{bkReserva.viajero.telefono}" readonly="true"/></label>
+                <label><span>Contraseña</span><h:inputText class="input-field password" value="********" readonly="true" style="font-weight: bold;"/></label>
+
+                <label><span>Imagen de perfil</span></label>
+                <h:form id="fileUpoad2" prependId="false" enctype="multipart/form-data" style="border-bottom: 0">                                             
+                    <p:messages id="messages" autoUpdate="true" closable="true" />
+                    <p:fileUpload 
+                        label="Examinar" 
+                        cancelLabel="Cancelar" 
+                        uploadLabel="Subir"
+                        id="fileIdPhoto"  
+                        fileUploadListener="#{bkReserva.uploadPhoto}" 
+                        mode="advanced" 
+                        dragDropSupport="true"
+                        update="messages" 
+                        sizeLimit="10000000"  
+                        allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                        />
+                </h:form>
+            </h:panelGroup>
+        </div>
+
+        <div class="modal mail" id="myModal">
+            <h:form id="formularioMail" prependId="false">
+                <span class="close">&times;</span>
+                <div class="form-style-2 comprobar">
+                    <div class="form-style-2-heading">Cambio de e-mail</div>
+                    <label><span>Nuevo e-mail</span><h:inputText class="input-field" id="mail" value="#{bkReserva.modificarEmail}"/></label>
+                    <label><h:commandButton class="input-field" value="Guardar cambios" action="#{bkReserva.cambiarEmail()}"/></label>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="modal password" id="myModalTwo">
+            <h:form id="formularioContrasena" prependId="false">
+                <span class="close">&times;</span>
+                <div class="form-style-2 comprobar">
+                    <div class="form-style-2-heading">Cambio de contraseña</div>
+                    <label><span>Nueva contraseña</span><h:inputSecret class="input-field" id="password"/></label>
+                    <label><span>Repita contraseña</span><h:inputSecret class="input-field" id="passwordRepeat" value="#{bkReserva.modificarContraseña}"/></label>
+                    <label><h:commandButton class="input-field" value="Guardar cambios" action="#{bkReserva.cambiarPassword()}"/></label>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="modal telefono" id="myModalThree">
+            <h:form id="formularioTelefono" prependId="false">
+                <span class="close">&times;</span>
+                <div class="form-style-2 comprobar">
+                    <div class="form-style-2-heading">Cambio de teléfono</div>
+                    <label><span>Nuevo teléfono</span><h:inputText class="input-field" id="newTelefono"/></label>
+                    <label><span>Repita teléfono</span><h:inputText class="input-field" id="newTelefonoRepeat" value="#{bkReserva.modificarTelefono}"/></label>
+                    <label><h:commandButton class="input-field" value="Guardar cambios" action="#{bkReserva.cambiarTelefono()}"/></label>
+                </div>
+            </h:form>
+        </div>
+
+        <footer class="flex">
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Nosotros</h3></li>
+                <li><a href="#">CONDICIONES DE USO</a></li>
+                <li><a href="#">POLITICA DE PRIVACIDAD</a></li>
+                <li><a href="#">COOKIES</a></li>
+                <li><a href="#">CONTACTAR</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Propietarios</h3></li>
+                <li><a href="#">DESTACA TU ALOJAMIENTO</a></li>
+                <li><a href="#">CONSEJOS</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Viajeros</h3></li>
+                <li><a href="#">CASAS RURALES</a></li>
+                <li><a href="#">PUEBLOS</a></li>
+            </ul>
+
+            <section class="footer-social-section flex">
+                <span class="footer-social-overlap footer-social-connect">
+                    CONECTA <span class="footer-social-small">CON</span> NOSOTROS
+                </span>
+                <span class="footer-social-overlap footer-social-icons-wrapper">
+                    <a href="https://www.facebook.com/" class="generic-anchor" target="_blank" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/" class="generic-anchor" target="_blank" title="Twitter" ><i class="fab fa-twitter"></i></a>
+                    <a href="http://instagram.com/" class="generic-anchor" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </span>
+            </section>
+        </footer>
+
+    </h:body>
+</html>
+

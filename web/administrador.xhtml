@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>JSP Page</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/cabecera.js"></script>
+        <style>
+
+            html{
+                font-family: "Helvetica Neue", sans-serif;
+                width:100%;
+                color:#666666;
+                text-align:center;
+            }
+
+            .popup-overlay{
+                /*Hides pop-up when there is no "active" class*/
+                visibility:visible;
+                position:absolute;
+                background:#ffffff;
+                border:3px solid #666666;
+                width:50%;
+                height:50%;
+                left:25%; 
+            }
+            .popup-overlay.active{
+                /*displays pop-up when "active" class is present*/
+                visibility:visible;
+                text-align:center;
+            }
+
+            .popup-content {
+                /*Hides pop-up content when there is no "active" class */
+                visibility:visible;
+            }
+
+            .popup-content.active {
+                /*Shows pop-up content when "active" class is present */
+                visibility:visible;
+            }
+
+            header{
+                display: block;
+                background: #000;
+                background-image: none;
+                background-image: linear-gradient( #00dc00 0% ,#f4f4f4 98%);
+                color: white;
+                height: 110px;
+
+            }
+
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+
+            #tabs label{
+                display: block;
+            }
+
+            .titulo{
+                font-weight: bold;
+            }
+
+            #tabs{
+                background: white;
+            }
+            
+            #actServ, #crear, #denuncias form{
+                width: 30%;
+                border: 1px solid green;
+                text-align: left;
+                margin: 10px;
+                padding: 10px;
+                float: right;
+            }
+            
+            #denuncias form{
+                width: 97%;
+            }
+            
+        </style>
+    </h:head>
+    <h:body>
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                        </li>
+                        <li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink id="ajaxCerrarSesion2" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                <i class="fas fa-power-off"></i> Cerrar sesión
+                            </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <!-- FIN CABECERA -->
+        
+        
+        <h1><h:outputText value="Admin"/></h1>
+        
+        <h:form id="actServ">
+            <h:outputLabel value="Selecciona alguna actividad o servicio para eliminar"/><br></br>
+            <h:selectOneMenu value="#{bkAdmin.actividad}">  
+                <f:selectItems value="#{bkAdmin.listaActividades}"/>    
+            </h:selectOneMenu>
+            <h:commandButton value="Borrar actividad" action="#{bkAdmin.borraActividad()}"/><br></br><br></br>
+
+            <h:selectOneMenu value="#{bkAdmin.servicio}">  
+                <f:selectItems value="#{bkAdmin.listaServicios}"/>    
+            </h:selectOneMenu>
+            <h:commandButton value="Borrar servicio" action="#{bkAdmin.borraServicio()}"/>
+        </h:form>
+
+        <h:form id="crear">
+            <h:outputLabel value="Escribe la actividad o servicio que quieras añadir"/><br></br>
+            <h:inputText value="#{bkAdmin.actividadCrear}"/>
+            <h:commandButton value="Añadir actividad" action="#{bkAdmin.creaActServ()}"/><br></br><br></br>
+            <h:inputText value="#{bkAdmin.servicioCrear}"/>
+            <h:commandButton value="Añadir servicio" action="#{bkAdmin.creaActServ()}"/>
+        </h:form>
+
+        <h:panelGroup id="denuncias">
+            <h:outputLabel value="Estas son las opiniones denunciadas por los propietarios, selecciona alguna para verla con detalle"/><br></br>
+            <ui:repeat var="opi" value="#{bkAdmin.listadoOpinionesDen}"> 
+                <h:form>
+                    <h:outputText value="#{opi.comentario}"/>
+                    <p:commandButton value="Ver" actionListener="#{bkAdmin.mostrarOpinion(opi.codigoOpinion)}" update="recharge" class="open"/>
+                </h:form>
+            </ui:repeat>
+        </h:panelGroup>
+
+
+        <div id="myModal" class="modal">
+            <div id="tabs">
+                <span class="close">&times;</span>
+                <h:panelGroup id="recharge">
+                    <h:form rendered="#{bkAdmin.opinionEscogida!=null}" >
+                        <h:outputLabel value="PUNTUACION MEDIA: #{bkAdmin.opinionEscogida.puntuacionMedia}" style="text-decoration: underline;"/><br></br>
+                        <h:outputLabel value="Confort" class="titulo"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.confort}" class="nota"/>
+                        <h:outputLabel value="Limpieza" class="titulo"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.limpieza}" class="nota"/>
+                        <h:outputLabel value="Relación calidad-precio" class="titulo"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.relacionCP}" class="nota"/>
+                        <h:outputLabel value="Trato por parte del personal" class="titulo"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.tratoRecibido}" class="nota"/>
+                        <h:outputLabel value="Ubicación del alojamiento" class="titulo"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.ubicacion}" class="nota"/>
+                        <br></br>
+
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.nif.nombre}"/>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.fecha}" >
+                            <f:convertDateTime pattern="dd.MM.yyyy" />
+                        </h:outputLabel>
+                        <h:outputLabel value="#{bkAdmin.opinionEscogida.comentario}"/>
+
+                        <!--popup's close button-->
+                        <h:commandButton value="Borrar opinion" action="#{bkAdmin.borrarOpinion()}"></h:commandButton>  
+                        <button onclick="triggerSpan()">Mantener opinion</button>
+                    </h:form>
+                </h:panelGroup>
+            </div>
+        </div>
+
+
+
+
+        <script>
+
+            var modal = document.getElementById('myModal');
+            var ventanaLogin = document.getElementById('perfilUsuario');
+            var span = document.getElementsByClassName("close")[0];
+
+            function triggerSpan(){
+                $(span).trigger("click");
+            }
+
+            $(document).on("click", ".open", function () {
+                $("#myModal").css("display", "block");
+                var name = $(this).attr("name");
+                //alert(name)
+            });
+
+            span.onclick = function () {
+                $("#myModal").css("display", "none");
+                $("#remember").css("display", "none");
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    $("#myModal").css("display", "none");
+                    $("#remember").css("display", "none");
+                }
+            }
+        </script>
+    </h:body>
+</html>
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="RuralHousesPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>DTO.Pueblosserrania</class>
+    <class>DTO.Ocupacion</class>
+    <class>DTO.Chat</class>
+    <class>DTO.Comunidades</class>
+    <class>DTO.Municipios</class>
+    <class>DTO.Alojamiento</class>
+    <class>DTO.Sierras</class>
+    <class>DTO.Imagen</class>
+    <class>DTO.Provincias</class>
+    <class>DTO.Opinion</class>
+    <class>DTO.Reserva</class>
+    <class>DTO.Cuentabancaria</class>
+    <class>DTO.Actividades</class>
+    <class>DTO.Servicios</class>
+    <class>DTO.Provincia</class>
+    <class>DTO.Zona</class>
+    <class>DTO.Puebloszona</class>
+    <class>DTO.Condicionesalojamiento</class>
+    <class>DTO.Poblacion</class>
+    <class>DTO.Servicio</class>
+    <class>DTO.Actividad</class>
+    <class>DTO.Usuario</class>
+    <class>DTO.Favoritos</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ruralhouses?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>

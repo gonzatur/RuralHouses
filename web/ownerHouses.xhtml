@@ -1,0 +1,435 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+        <link rel="stylesheet" href="css/jquery.fancybox.min.css" />  
+        <script src="js/jquery.fancybox.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="http://code.jquerygeo.com/jquery.geo-1.1.0.min.js"></script>
+
+        <script src="js/ownerHouses.js"></script>
+        <script src="js/cabecera.js"></script>
+
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link> 
+        <link rel="stylesheet" href="css/rh/footer.css"></link>
+        <link rel="stylesheet" href="css/rh/nav.css"></link>
+        <link rel="stylesheet" href="css/rh/ownerHouses.css"></link>
+
+
+
+
+
+    </h:head>
+    <h:body>
+        <h:inputHidden value="#{bkOwner.propietario.nif}"/>
+
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+
+
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                        </li>
+                        <li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink id="ajaxCerrarSesion2" update="cabecera perfilUsuarioGroup" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                <i class="fas fa-power-off"></i> Cerrar sesión
+                            </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <!-- FIN CABECERA -->
+
+
+        <div id="nav">
+            <ul>
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                    <li class="titulo">
+                        <span>PROPIETARIO</span>
+                    </li>
+                    <li>
+                        <a href="ownerCalendar.xhtml" >
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Calendario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerHouses.xhtml" class="active">
+                            <i class="fas fa-home"></i>
+                            <span>Alojamientos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerOpinion.xhtml">
+                            <i class="far fa-comment"></i>
+                            <span>Opiniones</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+                <!-- DIVISION DE MENU  PROPIETARIO Y VIAJERO-->
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario' or bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                    <li class="titulo">
+                        <span>VIAJERO</span>
+                    </li>
+                    <li>
+
+                        <a href="viajeroReserva.xhtml">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Mis reservas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroFav.xhtml">
+                            <i class="far fa-heart"></i>
+                            <span>Mis favoritos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroOpinion.xhtml">
+                            <i class="fas fa-star-half-alt"></i>
+
+                            <span>Mis opiniones</span>
+                        </a>
+                    </li>
+                    <li class="titulo">
+                        <span>PERFIL</span>
+                    </li>
+                    <li>
+                        <a href="userProfile.xhtml">
+                            <i class="far fa-user"></i>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+            </ul>
+        </div>
+
+        <h:panelGroup id="tabs">
+            <ul id="menuAloj">
+                <ui:repeat var="alojamiento" value="#{bkOwner.listadoAlojamientos}"> 
+
+                    <h:panelGroup rendered="#{alojamiento.completo == 0}">
+                        <li id="#{alojamiento.registroTurismo}">
+                            <a href="#tabs1">#{alojamiento.nombre}</a>
+                        </li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{alojamiento.completo == 1}">
+                        <li id="#{alojamiento.registroTurismo}" style="background: #ff1212cc;">
+                            <a href="#tabs1" style="color:white">#{alojamiento.nombre}</a>
+                        </li>
+                    </h:panelGroup>
+
+                </ui:repeat>
+                <li id="ultimo"><a href="#tabsAnadir">Añadir nuevo alojamiento</a></li>
+            </ul>
+
+            <h:panelGroup id="tabs1" rendered="#{bkOwner.alojamiento!=null}">
+
+                <h:panelGroup id="tabs2">
+
+                    <ul>
+                        <li><a href="#tabs-0">Resumen</a></li>
+                        <li><a href="#tabs-1">Precios</a></li>
+                        <li><a href="#tabs-2">Condiciones</a></li>
+                        <li><a href="#tabs-3">Descripción</a></li>
+                        <li><a href="#tabs-4">Características</a></li>
+                        <li><a href="#tabs-5">Mapa</a></li>
+                        <li><a href="#tabs-6">Fotos</a></li>
+                        <li><a href="#tabs-7">Dar de baja</a></li>
+                    </ul>
+
+                    <h:panelGroup id="prueba">
+
+                        <h:panelGroup id="tabs-0">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Diseñe los datos generales de su alojamiento</i> 
+                            <h:form>
+                                <div class="form-style-2">
+                                    <label><span>Nombre del alojamiento</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.nombre}"/></label>
+                                    <label><span>Nº de registro en turismo</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.registroTurismo}" disabled="true"/></label>
+                                    <label><span>Provincia</span><h:inputText class="input-field" value="#{bkOwner.provincia}" disabled="true"/></label>
+                                    <label><span>Población</span><h:inputText class="input-field" value="#{bkOwner.poblacion.nombrePoblacion}" disabled="true"/></label>
+                                    <label><span>Teléfono</span><h:inputText class="input-field" value="#{bkOwner.propietario.telefono}"/></label>
+                                    <label><span>Número de habitaciones</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.numeroHab}"/></label>
+                                    <label><span>Número de baños</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.numeroWc}"/></label>
+                                    <label><span>Metros2 del alojamiento</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.metrosCuadrados}"/></label>
+
+
+                                    <h:commandButton value="Guardar cambios" actionListener="#{bkOwner.modificarResumen(bkOwner.alojamiento)}" />
+                                </div>
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-1">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Diseñe los precios que tendrá su alojamiento</i> 
+                            <h:form>
+                                <div class="form-style-2">
+                                    <label><span>Precio base por persona y noche</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.precioNoche}"/></label>
+                                    <label><span>Plazas mínimas que se cobrarán</span><h:inputText class="input-field" value="#{bkOwner.condicionesAlojamiento.a}"/></label>
+                                    <label><span>Plazas máximas que admite el alojamiento</span><h:inputText class="input-field" value="#{bkOwner.alojamiento.plazasMax}"/></label>
+
+                                    <p:commandButton value="Guardar cambios" actionListener="#{bkOwner.modificarPrecios()}" update="tabs-1"></p:commandButton>
+                                </div>
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-2">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Diseñe las condiciones que tendrá su alojamiento</i> 
+                            <h:form>
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>Anticipo para reservar</p:column>
+
+                                        <p:column colspan="2">
+                                            <h:selectOneRadio value="#{bkOwner.anticipo}" layout="pageDirection">
+                                                <f:selectItem itemValue="1" itemLabel="No se requiere anticipo" />
+                                                <f:selectItem itemValue="2" itemLabel="Pagar un porcentaje del total de la reserva"/>
+                                            </h:selectOneRadio>
+                                            <h:inputText value="#{bkOwner.condicionesAlojamiento.d}"></h:inputText> %
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column rowspan="2">Política de cancelación</p:column>
+
+                                        <p:column colspan="2">
+                                            <h:selectOneRadio value="#{bkOwner.cancelacion}" layout="pageDirection">
+                                                <f:selectItem itemValue="1" itemLabel="No hay devolución" />
+                                                <f:selectItem itemValue="2" itemLabel="Se devuelve un porcentaje"/>
+                                            </h:selectOneRadio>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputText value="Días antes de la llegada "></h:outputText><br></br><br></br>
+                                            <h:inputText value="#{bkOwner.condicionesAlojamiento.e}"></h:inputText> días
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Parte del anticipo que se devuelve "></h:outputText><br></br><br></br>
+                                            <h:inputText value="#{bkOwner.condicionesAlojamiento.f}"></h:inputText> %
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>Entrada a partir de las</p:column>
+                                        <p:column colspan="2">
+                                            <h:selectOneMenu value = "#{bkOwner.condicionesAlojamiento.g}" > 	
+                                                <f:selectItems value="#{bkOwner.horarioEntrada}" /> 
+                                            </h:selectOneMenu> 
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>Salida antes de las</p:column>
+                                        <p:column colspan="2">
+                                            <h:selectOneMenu value = "#{bkOwner.condicionesAlojamiento.h}"> 	
+                                                <f:selectItems value="#{bkOwner.horarioSalida}"/> 
+                                            </h:selectOneMenu> 
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <p:commandButton value="Guardar cambios" actionListener="#{bkOwner.modificarCondiciones()}" update="tabs-2"></p:commandButton>
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-3">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Haga un comentario de su alojamiento</i> 
+                            <h:form>
+                                <p:inputTextarea id="text-area" value="#{bkOwner.alojamiento.comentario}" maxlength="500" counter="restante" counterTemplate="Quedan {0} caracteres." autoResize="false" />
+                                <br></br>
+                                <h:outputText id="restante"></h:outputText>
+                                <br></br>
+                                <p:commandButton value="Guardar cambios" actionListener="#{bkOwner.modificarComentario()}" update="tabs-3"></p:commandButton>
+
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-4">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Seleccione las características y servicios de su alojamiento</i> 
+                            <h:form>
+                                <p:selectManyCheckbox value="#{bkOwner.actividadesElegidas}" layout="grid" columns="3">
+                                    <f:selectItems value="#{bkOwner.listaActividades}" />
+                                </p:selectManyCheckbox><br></br>
+                                <p:selectManyCheckbox value="#{bkOwner.serviciosElegidos}" layout="grid" columns="3">
+                                    <f:selectItems value="#{bkOwner.listaServicios}" />
+                                </p:selectManyCheckbox>
+
+                                <p:commandButton value="Guardar cambios" actionListener="#{bkOwner.modificarActServ()}" update="tabs-4"></p:commandButton>
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-5">
+                            <i class="fas fa-info-circle" style="margin-top: 20px;">Haga click en el mapa para modificar la ubicación exacta del alojamiento</i> 
+                            <div id="map" style="height: 500px; margin-top: 25px;">
+
+
+                            </div>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-6"> 
+                            <h:form id="fileUpoad2" prependId="false" enctype="multipart/form-data" style="border-bottom: 0">                                             
+                                <h:outputLabel for="fileIdPhoto" value="Busca o arrastra imágenes para añadirlas a tu alojamiento. Primero debes subirlas y después guardar los cambios" />                                               
+                                <p:messages id="messages" autoUpdate="true" closable="true" />
+                                <p:fileUpload label="Examinar" 
+                                              cancelLabel="Cancelar" 
+                                              uploadLabel="Subir"
+                                              id="fileIdPhoto"  
+                                              fileUploadListener="#{bkOwner.uploadPhoto}" 
+                                              mode="advanced" 
+                                              dragDropSupport="true"
+                                              multiple="true" 
+                                              update="messages" 
+                                              sizeLimit="10000000"  
+                                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                              />
+                                <p:commandButton value="Guardar cambios" actionListener="#{bkOwner.restaurarImagenes()}" update="tabs-6"></p:commandButton><br></br>
+                            </h:form>
+                            <h:form style="float:left; border-top: 0; margin-top: -10px;">
+                                <div id="carruselFotos" style="margin-top: 50px;">
+                                    <ui:repeat var="foto" value="#{bkOwner.listadoFotosAlojamiento}"> 
+                                        <div class="cadaFoto">
+                                            <h:inputHidden value="#{foto.codImagen}" binding="#{bkOwner.fotoEliminar}"></h:inputHidden>
+                                            <a href="images/Alojamientos/#{bkOwner.alojamiento.registroTurismo}/#{foto.imagen}" class="left" data-fancybox="showImg" title="#{bkOwner.alojamiento.nombre}">
+                                                <p:graphicImage url="images/Alojamientos/#{bkOwner.alojamiento.registroTurismo}/#{foto.imagen}" width="100" height="80"/>
+                                            </a>
+                                            <ul class="left">
+                                                <li>
+                                                    <p:commandButton value="Eliminar" actionListener="#{bkOwner.eliminarFoto()}" update="tabs-6"
+                                                                     icon="fa fa-fw fa-times"></p:commandButton>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </h:form>    
+
+                        </h:panelGroup>
+
+                        <h:panelGroup id="tabs-7">
+                            <div id="borrarAloj">
+
+                                <h:outputLabel value="#{bkOwner.alojamiento.nombre}"></h:outputLabel><br></br>
+                                <h:outputLabel value="#{bkOwner.poblacion.nombrePoblacion} (#{bkOwner.provincia})"></h:outputLabel>
+                                <p:rating value="#{bkOwner.puntuacionMediaAloj()}" stars="5" readonly="true" rendered="#{bkOwner.alojamiento!=null}"></p:rating>
+                                <h:outputLabel value="#{bkOwner.alojamiento.opinionList.size()} Opiniones" class="numOp"></h:outputLabel>
+                                <h:graphicImage url="images/Alojamientos/#{bkOwner.alojamiento.registroTurismo}/#{bkOwner.alojamiento.imagenPrincipal}" class="imagenDel" rendered="#{bkOwner.alojamiento.imagenPrincipal != ''}"></h:graphicImage>
+                                <h:graphicImage url="images/Alojamientos/noAvailable.jpg" class="imagenDel" style="width:33%;" rendered="#{bkOwner.alojamiento.imagenPrincipal == ''}"></h:graphicImage>
+
+                                <h:outputLabel value="Sentimos que quieras cancelar tu suscripción con nosotros.... + info" class="despedir"></h:outputLabel>
+                                <h:form>
+                                    <h:commandButton value="Eliminar alojamiento" class="borrarCasa" action="#{bkOwner.bajaAlojamiento()}"/>
+                                </h:form> 
+                            </div>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+
+            </h:panelGroup>
+            <h:panelGroup id="tabsAnadir">
+                <h:form>
+
+                    <h:outputLabel for="nombreAloj" value="Indica el nombre que te gustaría que tuviera tu alojamiento"></h:outputLabel><br></br>
+                    <h:inputText id="nombreAloj" value="#{bkOwner.nombreAlojamiento}"/><br></br>
+
+                    <h:outputLabel for="registroTur" value="Indica el código de su alojamiento registrado en TURISMO"></h:outputLabel><br></br>
+                    <h:inputText id="registroTur" value="#{bkOwner.registroTurismo}"/><br></br><br></br>
+
+                    <p:selectOneMenu id="city" value="#{bkOwner.city}" editable="false"  filter="true" filterMatchMode="startsWith" caseSensitive="false" required="true">
+                        <f:selectItems value="#{bkRegister.allCities}" />
+                    </p:selectOneMenu><br></br>
+
+                    <h:commandButton value="Continuar" actionListener="#{bkOwner.crearAlojamiento}"></h:commandButton>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <h:form id="formHidden">
+            <h:inputHidden id="inputHidden" value="#{bkOwner.alojamiento.registroTurismo}"></h:inputHidden>
+            <p:commandButton id="botonHidden" actionListener="#{bkOwner.cambiarAlojamiento()}" update="prueba" ></p:commandButton>
+        </h:form>
+
+        <footer class="flex">
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Nosotros</h3></li>
+                <li><a href="#">CONDICIONES DE USO</a></li>
+                <li><a href="#">POLITICA DE PRIVACIDAD</a></li>
+                <li><a href="#">COOKIES</a></li>
+                <li><a href="#">CONTACTAR</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Propietarios</h3></li>
+                <li><a href="#">DESTACA TU ALOJAMIENTO</a></li>
+                <li><a href="#">CONSEJOS</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Viajeros</h3></li>
+                <li><a href="#">CASAS RURALES</a></li>
+                <li><a href="#">PUEBLOS</a></li>
+            </ul>
+
+            <section class="footer-social-section flex">
+                <span class="footer-social-overlap footer-social-connect">
+                    CONECTA <span class="footer-social-small">CON</span> NOSOTROS
+                </span>
+                <span class="footer-social-overlap footer-social-icons-wrapper">
+                    <a href="https://www.facebook.com/paviliongift" class="generic-anchor" target="_blank" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/PavilionGiftCo" class="generic-anchor" target="_blank" title="Twitter" ><i class="fab fa-twitter"></i></a>
+                    <a href="http://instagram.com/paviliongiftcompany" class="generic-anchor" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </span>
+            </section>
+        </footer>
+    </h:body>
+</html>

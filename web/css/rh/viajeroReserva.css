@@ -1,0 +1,168 @@
+#CuadroReservas{
+    width: 85%;
+    border:2px solid #3d587d;
+    float: right;
+    text-align: center;
+    padding: 10px;
+    background: white;
+    height: 570px;
+    overflow: auto;
+    margin-top: 10px;
+}
+
+.left{
+    float:left;
+}
+
+#centro{
+    position: relative;
+    top: -20px;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.formReserva{
+    margin: 30px auto;
+    text-align: left;
+    border-bottom: 2px solid #3d587d;
+    padding: 15px 15px 30px 15px;
+}
+
+.formReserva > label{
+    margin: 0 0 0 10px;
+    float: left;
+}
+
+#derecha{
+    position:relative;
+    top: -75px;
+    float:right;
+}
+
+#derecha input{
+    display: block;
+    width: 100px;
+    margin: 0 0 5px 0;
+}
+
+
+.buscadorAtrasR {
+    display: block;
+    width: 100px;
+    margin: 0 0 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid #cfcfcf;
+    color: #454545;
+    font-weight: bold;
+}
+
+.buscadorAtrasR:hover{
+    background: #9daabc;
+    border: 2px solid #4e6788;
+    color: white;
+    cursor: pointer;
+}
+
+
+.ui-rating{
+    margin: 5px 0 0 10px;
+    width: 10%;
+    float: left;
+    height: 40px;
+}
+
+#parteDer .ui-rating{width: 20%;}
+
+.izq{
+    text-align: left;
+    float: left;
+    width: 100%;
+    margin: 5px 0 8px 10px;
+}
+
+#parteIzq{
+    width: 45%;
+    float: left;
+    text-align: left;
+    margin: 10px;
+}
+#parteIzq label:first-child{
+    margin-bottom: 20px;
+}
+.cifra{
+    color:red;
+    text-align: center;
+    position: relative;
+    top: -21.5px;
+    margin: -5px 0 -8px 10px;
+    width: 130%;
+}
+
+.negrita{
+    font-weight: bold;
+}
+
+.subrayado{
+    font-size: 19px;
+    text-decoration: underline;
+}
+
+#parteDer{
+    text-align: left;
+    width: 45%;
+    float: right;
+    margin: 10px;
+}
+
+#parteDer .ui-button:first-child{
+    margin-right: 10px;
+    width: auto;
+    float: right;
+}
+
+#parteDer .ui-button:last-child{
+    float: left;
+}
+
+.verde{
+    font-size: 19px;
+    color: #33ff33;
+}
+
+.margen{
+    margin-left: 10px;
+}
+
+
+
+.showReserva{
+    float: left;
+}
+
+.buscadorAtras {
+    float: left;
+    margin: 15px 5px 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid #cfcfcf;
+    color: #454545;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.buscadorAtras:hover{
+    background: #9daabc;
+    border: 2px solid #4e6788;
+    color: white;
+    cursor: pointer;
+}
+
+.noReserva{
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+}

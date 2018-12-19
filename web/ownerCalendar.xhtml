@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://code.jquerygeo.com/jquery.geo-1.1.0.min.js"></script>
+
+        <script src="js/jquery-ui-datepicker.min.js"></script>
+        <script src="js/jquery.fancybox.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+
+
+        <script src="js/cabecera.js"></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        <link rel="stylesheet" href="css/rh/cabecera.css"></link> 
+        <link rel="stylesheet" href="css/rh/footer.css"></link>
+        <link rel="stylesheet" href="css/rh/nav.css"></link>
+        <link rel="stylesheet" href="css/rh/ownerCalendar.css" ></link>
+        <link rel="stylesheet" href="css/rh/calendar.css" ></link>
+
+    </h:head>
+    <h:body>
+        <div id="contenedorBuscador">
+            <h:panelGroup id="cabecera">
+                <header>
+                    <ul class="child">
+
+
+                        <li id="lodestone">
+                            <a href="index.xhtml">
+                                <input type="image" src="images/Other/logoRuralBlanco.png" />
+                            </a>
+                        </li>
+                        <li id="mogstation">
+                            <div id="idiomas">
+                                <h:outputLabel value="Idioma"/>
+                                <h:commandButton image="images/Other/spain.png" />
+                                <h:commandButton image="images/Other/english.png"/>
+                            </div>
+                        </li>
+
+                        <li id="user">
+                            <h:panelGroup id="noIniciado" rendered="#{bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <button onclick="registro()" id="modal">Hazte una cuenta</button>
+                                <button onclick="iniciaSesion()" id="modal">Inicia sesión</button>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="iniciado" rendered="#{!bkLogin.comprobarRender(BkManageBeanSesion.log)}">
+                                <h:commandButton image="images/FotoPerfil/#{BkManageBeanSesion.usuarioLog.fotoPerfil}" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil != ''}"/>
+                                <h:commandButton image="images/Other/user.png" onclick="mostrarDatosUsuario('perfilUsuario')" rendered="#{BkManageBeanSesion.usuarioLog.fotoPerfil eq ''}"/>
+                            </h:panelGroup>
+                        </li>
+                    </ul>
+                </header>
+            </h:panelGroup>
+
+            <h:panelGroup id="perfilUsuarioGroup">
+                <div id="perfilUsuario">
+                    <ul>
+                        <li>
+                            <a><h:outputLabel value="Bienvenido #{BkManageBeanSesion.usuarioLog.nombre}"/></a>
+                        </li>
+                        <li>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                                <a href="/RuralHouses/faces/ownerHouses.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                                <a href="/RuralHouses/faces/viajeroReserva.xhtml">Ir a mi perfil</a>
+                            </h:panelGroup>
+                        </li>
+                        <li>
+                            <p:commandLink update="cabecera perfilUsuarioGroup" action="#{BkManageBeanSesion.logout('/RuralHouses/faces/index.xhtml')}" >
+                                <i class="fas fa-power-off"></i> Cerrar sesión
+                            </p:commandLink>
+                        </li>
+                    </ul>      
+                </div>
+            </h:panelGroup>
+        </div>
+        <div id="nav">
+            <ul>
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario'}">
+                    <li class="titulo">
+                        <span>PROPIETARIO</span>
+                    </li>
+                    <li>
+                        <a href="ownerCalendar.xhtml" class="active">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Calendario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerHouses.xhtml">
+                            <i class="fas fa-home"></i>
+                            <span>Alojamientos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ownerOpinion.xhtml">
+                            <i class="far fa-comment"></i>
+                            <span>Opiniones</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+                <!-- DIVISION DE MENU  PROPIETARIO Y VIAJERO-->
+                <h:panelGroup rendered="#{bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'propietario' or bkLogin.comprobarPerfil(BkManageBeanSesion.perfil) eq 'viajero'}">
+                    <li class="titulo">
+                        <span>VIAJERO</span>
+                    </li>
+                    <li>
+
+                        <a href="viajeroReserva.xhtml">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Mis reservas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroFav.xhtml">
+                            <i class="far fa-heart"></i>
+                            <span>Mis favoritos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="viajeroOpinion.xhtml">
+                            <i class="fas fa-star-half-alt"></i>
+
+                            <span>Mis opiniones</span>
+                        </a>
+                    </li>
+                    <li class="titulo">
+                        <span>PERFIL</span>
+                    </li>
+                    <li>
+                        <a href="userProfile.xhtml">
+                            <i class="far fa-user"></i>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                </h:panelGroup>
+            </ul>
+        </div>
+        <!-- FIN CABECERA -->
+
+        <div id="tabs">
+            <ul id="menuAloj">
+                <ui:repeat var="alojamiento" value="#{bkOwner.listadoAlojamientos}"> 
+                    <li id="#{alojamiento.registroTurismo}">
+                        <a href="#calendar#{alojamiento.registroTurismo}">#{alojamiento.nombre}</a>
+                    </li>
+                </ui:repeat>
+            </ul>
+
+            <ui:repeat var="alojamiento" value="#{bkOwner.listadoAlojamientos}"> 
+                <div id="calendar#{alojamiento.registroTurismo}">
+                    <div class="inlFlex">
+                        <div id="verde" class="leyenda"></div>Los días marcados en este color son las reservas que hace el cliente en la web. Estas reservas solo puede cancelarlas el cliente.
+                    </div>
+                    <div class="inlFlex">
+                        <div id="azul" class="leyenda"></div>Los días marcados en este color son los que seleccionas para que no se puedan reservar en la web. Puedes modificar y reservar todos los días que quieras.
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
+
+        <footer class="flex">
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Nosotros</h3></li>
+                <li><a href="#">CONDICIONES DE USO</a></li>
+                <li><a href="#">POLITICA DE PRIVACIDAD</a></li>
+                <li><a href="#">COOKIES</a></li>
+                <li><a href="#">CONTACTAR</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Propietarios</h3></li>
+                <li><a href="#">DESTACA TU ALOJAMIENTO</a></li>
+                <li><a href="#">CONSEJOS</a></li>
+            </ul>
+            <ul class="footColumna">
+                <li><h3 class="tituloColumna">Viajeros</h3></li>
+                <li><a href="#">CASAS RURALES</a></li>
+                <li><a href="#">PUEBLOS</a></li>
+            </ul>
+
+            <section class="footer-social-section flex">
+                <span class="footer-social-overlap footer-social-connect">
+                    CONECTA <span class="footer-social-small">CON</span> NOSOTROS
+                </span>
+                <span class="footer-social-overlap footer-social-icons-wrapper">
+                    <a href="https://www.facebook.com/paviliongift" class="generic-anchor" target="_blank" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/PavilionGiftCo" class="generic-anchor" target="_blank" title="Twitter" ><i class="fab fa-twitter"></i></a>
+                    <a href="http://instagram.com/paviliongiftcompany" class="generic-anchor" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </span>
+            </section>
+        </footer>
+
+        <script>
+            var index = 0;
+            $("#tabs").tabs({
+                active: index
+            });
+
+            var fechasReserva = {};
+            var fechasMias = {};
+
+            $(function () {
+                var idAlojamiento;
+                $(document).on("click", "#menuAloj li", function () {
+                    idAlojamiento = $(this).attr('id');
+                    var codigoAlojamiento = 'codigoAlojamiento=' + idAlojamiento;
+                    $.getJSON("FechasReserva", codigoAlojamiento, function (result) {
+                        fechasReserva = {};
+                        fechasMias = {};
+                        $.each(result, function (i, field) {
+                            //var quitarPrimero = field.substr(1);
+                            var fechas = field.slice(0, -1);
+                            console.log(field + " - " + i)
+
+                            if (i === 'resultadosReservas') {
+                                var res = fechas.split(",");
+                                res.forEach(function (element) {
+                                    var fechaFinal = element.substr(1);
+                                    fechasReserva[ new Date(fechaFinal)] = new Date(fechaFinal);
+                                    console.log(fechaFinal)
+                                });
+                            } else {
+                                var res = fechas.split(",");
+                                res.forEach(function (element) {
+                                    var fechaFinal = element.substr(1);
+                                    fechasMias[ new Date(fechaFinal)] = new Date(fechaFinal);
+                                    console.log(fechaFinal)
+                                });
+                            }
+                        });
+                        $("#calendar" + idAlojamiento).datepicker({
+                            numberOfMonths: [3, 4],
+                            monthNames: ['Noches de ENERO', 'Noches de FEBRERO', 'Noches de MARZO',
+                                'Noches de ABRIL', 'Noches de MAYO', 'Noches de JUNIO',
+                                'Noches de JULIO', 'Noches de AGOSTO', 'Noches de SEPTIEMBRE',
+                                'Noches de OCTUBRE', 'Noches de NOVIEMBRE', 'Noches de DICIEMBRE'],
+                            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                            firstDay: 1,
+                            minDate: new Date(),
+
+                            onSelect: function (dateString) {
+                                var miReservaBorrar;
+                                var miReservaInsert;
+                                if (fechasMias[new Date(dateString)] != null) {
+                                    delete fechasMias[new Date(dateString)]
+                                    miReservaBorrar = 'miReservaBorrar=' + dateString + "," + idAlojamiento;
+                                    $.getJSON("FechasReserva", miReservaBorrar, function (result) {
+
+                                    });
+                                } else {
+                                    fechasMias[new Date(dateString)] = new Date(dateString);
+                                    miReservaInsert = 'miReservaInsert=' + dateString + "," + idAlojamiento;
+                                    $.getJSON("FechasReserva", miReservaInsert, function (result) {
+
+                                    });
+                                }
+                            },
+                            beforeShowDay: function (date) {
+                                var pintarReservas = fechasReserva[date];
+                                var pintarMisFechas = fechasMias[date];
+
+                                if (pintarMisFechas) {
+                                    return [true, "misFechas"];
+                                } else if (pintarReservas) {
+                                    return [false, "reservas"];
+                                } else {
+                                    return [true, ''];
+                                }
+                            }
+                        });
+                    });
+
+                });
+                $("#menuAloj li:first-child").trigger("click");
+            });
+
+        </script>
+    </h:body>
+</html>
+
